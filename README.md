@@ -49,7 +49,7 @@ O app **Mundi** utilizará o banco de dados **MongoDB** (solução NoSQL baseada
 ## Planejamento de Sprints
 Mais informações sobre as tarefas e progresso estão disponíveis em [Project DPDM](https://github.com/users/milenahamerski/projects/3).
 
-### Sprint 1 – Setup & Autenticação
+### Sprint 1 – Setup & Autenticação ~ 2 semanas
 **Objetivo:** Criar a base do projeto e permitir cadastro/login de usuários.  
 - Configuração inicial do app (Expo + React Native + TypeScript)  
 - Integração com backend + MongoDB  
@@ -57,7 +57,7 @@ Mais informações sobre as tarefas e progresso estão disponíveis em [Project 
 - Login/autenticação
 - Navegação inicial
 
-### Sprint 2 – CRUD de Viagens
+### Sprint 2 – CRUD de Viagens ~ 2 semanas
 **Objetivo:** Permitir ao usuário registrar e gerenciar viagens.  
 - Registro de novas viagens (destino, data, observações)  
 - Listagem de viagens  
@@ -65,14 +65,14 @@ Mais informações sobre as tarefas e progresso estão disponíveis em [Project 
 - Edição de viagens salvas  
 - Exclusão de viagens  
 
-### Sprint 3 – Histórico & UX
+### Sprint 3 – Histórico & UX ~ 1.5 semanas
 **Objetivo:** Melhorar a experiência do usuário e histórico de viagens.  
 - Tela de histórico de viagens anteriores  
 - Ajustes de UI seguindo protótipo do Figma  
 - Validações de formulários  
 - Feedback visual (loading, mensagens, toasts)  
 
-### Sprint 4 – Testes, Documentação & Publicação
+### Sprint 4 – Testes, Documentação & Publicação ~ 2 semanas
 **Objetivo:** Preparar o app para entrega e publicação inicial.  
 - Escrita de testes básicos (unitários e integração)  
 - Documentação do projeto (README, Wiki)  
