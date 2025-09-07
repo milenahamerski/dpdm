@@ -47,7 +47,7 @@ O app **Mundi** utilizará o banco de dados **MongoDB** (solução NoSQL baseada
 [Visualizar modelagem do banco de dados](https://drive.google.com/file/d/1l2Onv3uUJZcMsfiLDRD30OCM4J1D9LQR/view?usp=sharing)
 
 ## Planejamento de Sprints
-Mais informações sobre as tarefas e progresso estão disponíveis no board do GitHub.
+Mais informações sobre as tarefas e progresso estão disponíveis em [Project DPDM](https://github.com/users/milenahamerski/projects/3).
 
 ### Sprint 1 – Setup & Autenticação
 **Objetivo:** Criar a base do projeto e permitir cadastro/login de usuários.  
