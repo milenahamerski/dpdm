@@ -13,14 +13,14 @@ export default function HomeScreen() {
   return (
     <View className="flex-1 justify-center items-center bg-beige px-6">
       <Text className="text-2xl font-medium text-white mb-4 text-center">
-        Olá, {session?.user?.email ?? "usuária"} 👋
+        Hellou, {session?.user?.email ?? "usuária"} 👋
       </Text>
 
       <TouchableOpacity
         onPress={handleLogout}
         className="bg-purple py-3 px-8 rounded-full mt-4"
       >
-        <Text className="text-beige font-semibold text-blue">Sair</Text>
+        <Text className="text-beige font-semibold text-blue">Logout</Text>
       </TouchableOpacity>
     </View>
   );
