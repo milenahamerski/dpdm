@@ -7,6 +7,9 @@
 **Vídeo do protótipo:**
 Segue o link do vídeo demonstrando o funcionamento do protótipo do aplicativo: [link](https://youtube.com/shorts/LeEKGPUh-gQ?feature=share)
 
+**Vídeo do protótipo:**
+Segue o link do vídeo demonstrando o funcionamento do protótipo do aplicativo: [link](https://youtube.com/shorts/LeEKGPUh-gQ?feature=share)
+
 Com ele, você pode:
 
 - Registrar destinos e datas das suas viagens
@@ -30,6 +33,11 @@ Com ele, você pode:
 - Modo escuro (Dark Mode)
 - Compartilhamento de roteiros com outros usuários
 - Sugestão de destinos com base no histórico do usuário
+- Upload de fotos das viagens
+- Notificações sobre viagens próximas
+- Modo escuro (Dark Mode)
+- Compartilhamento de roteiros com outros usuários
+- Sugestão de destinos com base no histórico do usuário
 
 ---
 
@@ -44,6 +52,7 @@ Os protótipos foram desenvolvidos no Figma e estão disponíveis para visualiza
 ## Modelagem do banco de dados
 
 O app Mundi utilizará o banco de dados do Supabase (solução baseada em SQL) para armazenar as informações dos usuários e suas viagens.
+Para este trabalho, utilizei a documentação do [Supabase](https://supabase.com/docs/guides/getting-started/tutorials/with-expo-react-native), assim como o repositório [Expo Supabase Starter](https://github.com/flemingvincent/expo-supabase-starter)
 Para este trabalho, utilizei a documentação do [Supabase](https://supabase.com/docs/guides/getting-started/tutorials/with-expo-react-native), assim como o repositório [Expo Supabase Starter](https://github.com/flemingvincent/expo-supabase-starter)
 
 ### Link para visualização da modelagem no diagrams.net
