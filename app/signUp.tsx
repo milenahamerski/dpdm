@@ -1,8 +1,17 @@
-import { View, Text, TouchableOpacity, StyleSheet, Alert } from "react-native";
+import {
+  View,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  Alert,
+  Image,
+  StyleSheet,
+} from "react-native";
 import { router } from "expo-router";
 import SignUpForm from "@components/SignUpForm";
 import AuthHeader from "@components/ui/AuthHeader";
 import { useSignUp } from "@hooks/useSignUp";
+import MundiLogo from "@assets/images/MUNDI.png";
 
 export default function SignUpScreen() {
   const { signUp } = useSignUp();
@@ -16,51 +25,46 @@ export default function SignUpScreen() {
     try {
       await signUp({ email, password, username, full_name });
       Alert.alert(
-        "Conta criada!",
-        "Verifique seu e-mail para confirmar o cadastro."
+        "Account created!",
+        "Check your email to confirm your registration."
       );
       router.replace("/");
     } catch (error: any) {
-      Alert.alert("Erro ao cadastrar", error.message);
+      Alert.alert("Sign Up Error", error.message);
     }
   };
 
   return (
-    <View style={styles.container}>
+    <ScrollView
+      className="flex-1 bg-white"
+      contentContainerStyle={{
+        flexGrow: 1,
+        justifyContent: "center",
+        paddingHorizontal: 24,
+      }}
+      showsVerticalScrollIndicator={false}
+    >
+      <Image source={MundiLogo} style={styles.logo} resizeMode="contain" />
       <AuthHeader
-        title="Crie sua conta ✨"
-        subtitle="Comece a usar o app agora mesmo"
+        title="Create your account"
+        subtitle="Start using the app right now"
       />
-
       <SignUpForm onSubmit={handleSignUp} />
-
-      <View style={styles.signinContainer}>
-        <Text style={styles.text}>Já tem conta? </Text>
-        <TouchableOpacity onPress={() => router.push("/")}>
-          <Text style={styles.signinText}>Entre</Text>
+      <View className="flex-row justify-center mt-lg">
+        <Text className="text-navy">Already have an account? </Text>
+        <TouchableOpacity onPress={() => router.push("/signIn")}>
+          <Text className="text-red font-semibold">Sign In</Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    paddingHorizontal: 24,
-    backgroundColor: "#E8DDC9",
-  },
-  signinContainer: {
-    flexDirection: "row",
-    justifyContent: "center",
-    marginTop: 24,
-  },
-  text: {
-    color: "#553A59",
-  },
-  signinText: {
-    color: "#85686A",
-    fontWeight: "600",
+  logo: {
+    width: 120,
+    height: 120,
+    alignSelf: "center",
+    marginBottom: 32,
   },
 });

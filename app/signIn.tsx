@@ -1,8 +1,17 @@
-import { View, Text, TouchableOpacity, StyleSheet, Alert } from "react-native";
+import {
+  View,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  Alert,
+  Image,
+  StyleSheet,
+} from "react-native";
 import { router } from "expo-router";
 import SignInForm from "@components/SignInForm";
 import AuthHeader from "@components/ui/AuthHeader";
 import { useSignIn } from "@hooks/useSignIn";
+import MundiLogo from "@assets/images/MUNDI.png";
 
 export default function SignInScreen() {
   const { signInWithPassword } = useSignIn();
@@ -10,43 +19,43 @@ export default function SignInScreen() {
   const handleSignIn = async (email: string, password: string) => {
     try {
       await signInWithPassword({ email, password });
-      router.replace("/home"); // navega para home
+      router.replace("/(protected)/users/home");
     } catch (error: any) {
-      Alert.alert("Erro ao entrar", error.message);
+      Alert.alert("Sign In Error", error.message);
     }
   };
 
   return (
-    <View style={styles.container}>
+    <ScrollView
+      className="flex-1 bg-white"
+      contentContainerStyle={{
+        flexGrow: 1,
+        justifyContent: "center",
+        paddingHorizontal: 24,
+      }}
+      showsVerticalScrollIndicator={false}
+    >
+      <Image source={MundiLogo} style={styles.logo} resizeMode="contain" />
       <AuthHeader
-        title="Bem-vindo de volta 💜"
-        subtitle="Entre com sua conta para continuar"
+        title="Welcome back!"
+        subtitle="Sign in to your account to continue"
       />
-
       <SignInForm onSubmit={handleSignIn} />
-
-      <View style={styles.signupContainer}>
-        <Text style={styles.text}>Não tem conta? </Text>
-        <TouchableOpacity onPress={() => router.push("/signup")}>
-          <Text style={styles.signupText}>Cadastre-se</Text>
+      <View className="flex-row justify-center mt-lg">
+        <Text className="text-navy">Don’t have an account? </Text>
+        <TouchableOpacity onPress={() => router.push("/signUp")}>
+          <Text className="text-red font-semibold">Sign Up</Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    paddingHorizontal: 24,
-    backgroundColor: "#E8DDC9",
+  logo: {
+    width: 120,
+    height: 120,
+    alignSelf: "center",
+    marginBottom: 32,
   },
-  signupContainer: {
-    flexDirection: "row",
-    justifyContent: "center",
-    marginTop: 24,
-  },
-  text: { color: "#553A59" },
-  signupText: { color: "#85686A", fontWeight: "600" },
 });

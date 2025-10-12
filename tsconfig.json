@@ -11,7 +11,8 @@
       "@providers/*": ["providers/*"],
       "@components/*": ["components/*"],
       "@lib/*": ["lib/*"],
-      "@theme": ["theme"]
+      "@theme": ["theme"],
+      "@assets/*": ["assets/*"]
     },
     "esModuleInterop": true,
     "skipLibCheck": true,

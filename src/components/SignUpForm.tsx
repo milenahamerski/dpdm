@@ -1,16 +1,22 @@
 import { useState } from "react";
-import { View, TextInput, Button, StyleSheet } from "react-native";
+import { View, Image, StyleSheet } from "react-native";
+import FormInput from "@components/ui/FormInput";
+import CustomButton from "@components/ui/CustomButton";
 
 interface SignUpFormProps {
   onSubmit: (
     email: string,
     password: string,
     username: string,
-    full_name: string
+    fullName: string
   ) => void;
+  loading?: boolean;
 }
 
-export default function SignUpForm({ onSubmit }: SignUpFormProps) {
+export default function SignUpForm({
+  onSubmit,
+  loading = false,
+}: SignUpFormProps) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
@@ -18,48 +24,76 @@ export default function SignUpForm({ onSubmit }: SignUpFormProps) {
 
   return (
     <View style={styles.container}>
-      <TextInput
-        style={styles.input}
-        placeholder="Full Name"
+      {/* Campos do formulário */}
+      <FormInput
         value={fullName}
         onChangeText={setFullName}
-      />
-      <TextInput
+        placeholder="Full Name"
         style={styles.input}
-        placeholder="Username"
+      />
+      <FormInput
         value={username}
         onChangeText={setUsername}
-      />
-      <TextInput
+        placeholder="Username"
         style={styles.input}
-        placeholder="Email"
+      />
+      <FormInput
         value={email}
         onChangeText={setEmail}
+        placeholder="Email"
         keyboardType="email-address"
         autoCapitalize="none"
-      />
-      <TextInput
         style={styles.input}
-        placeholder="Password"
+      />
+      <FormInput
         value={password}
         onChangeText={setPassword}
+        placeholder="Password"
         secureTextEntry
+        style={styles.input}
       />
-      <Button
-        title="Criar Conta"
+
+      {/* Botão de envio */}
+      <CustomButton
         onPress={() => onSubmit(email, password, username, fullName)}
-      />
+        disabled={loading}
+        style={styles.button}
+        textStyle={styles.buttonText}
+      >
+        Sign Up
+      </CustomButton>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { marginVertical: 10 },
+  container: {
+    width: "100%",
+    marginTop: 32,
+    alignItems: "center",
+  },
+  logo: {
+    width: 120,
+    height: 120,
+    marginBottom: 32,
+  },
   input: {
+    width: "100%",
+    paddingVertical: 18,
+    paddingHorizontal: 16,
+    marginBottom: 24,
+    fontSize: 18,
+    borderRadius: 16,
     borderWidth: 1,
     borderColor: "#ccc",
-    padding: 10,
-    marginBottom: 10,
-    borderRadius: 5,
+  },
+  button: {
+    width: "100%",
+    paddingVertical: 20,
+    borderRadius: 16,
+    alignItems: "center",
+  },
+  buttonText: {
+    fontSize: 18,
   },
 });
