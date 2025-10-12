@@ -19,29 +19,30 @@ export default function CustomButton({
     <TouchableOpacity
       onPress={onPress}
       disabled={disabled}
-      style={{
-        backgroundColor: disabled ? "#A5B4FC" : "#27A1A1",
-        paddingVertical: 12,
-        paddingHorizontal: 20,
-        borderRadius: 8,
-        alignItems: "center",
-        ...(style as Object),
-      }}
+      style={[
+        {
+          backgroundColor: disabled ? "#A5B4FC" : "#27A1A1",
+          paddingVertical: 12,
+          paddingHorizontal: 20,
+          borderRadius: 8,
+          alignItems: "center",
+          justifyContent: "center",
+        },
+        style,
+      ]}
     >
-      {typeof children === "string" ? (
-        <Text
-          style={{
+      <Text
+        style={[
+          {
             color: "#FFFFFF",
             fontWeight: "bold",
             fontSize: 16,
-            ...(textStyle as Object),
-          }}
-        >
-          {children}
-        </Text>
-      ) : (
-        children
-      )}
+          },
+          textStyle,
+        ]}
+      >
+        {children}
+      </Text>
     </TouchableOpacity>
   );
 }
