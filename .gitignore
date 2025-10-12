@@ -42,3 +42,5 @@ yarn-error.*
 
 # supabase
 supabase.ts
+
+.env
