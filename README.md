@@ -7,9 +7,6 @@
 **Vídeo do protótipo:**
 Segue o link do vídeo demonstrando o funcionamento do protótipo do aplicativo: [link](https://youtube.com/shorts/LeEKGPUh-gQ?feature=share)
 
-**Vídeo do protótipo:**
-Segue o link do vídeo demonstrando o funcionamento do protótipo do aplicativo: [link](https://youtube.com/shorts/LeEKGPUh-gQ?feature=share)
-
 Com ele, você pode:
 
 - Registrar destinos e datas das suas viagens
