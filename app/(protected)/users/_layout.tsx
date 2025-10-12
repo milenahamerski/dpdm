@@ -1,6 +1,6 @@
 import { Stack } from "expo-router";
 
-export default function _layout() {
+export default function ProtectedLayout() {
   return (
     <Stack
       screenOptions={{
@@ -10,8 +10,8 @@ export default function _layout() {
         },
       }}
     >
-      <Stack.Screen name="[id]" />
-      <Stack.Screen name="home" />
+      <Stack.Screen name="[id]" options={{ title: "User Details" }} />
+      <Stack.Screen name="home" options={{ title: "Home" }} />
     </Stack>
   );
 }
