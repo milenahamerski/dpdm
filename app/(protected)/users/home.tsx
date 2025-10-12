@@ -13,7 +13,7 @@ export default function HomeScreen() {
   return (
     <View className="flex-1 justify-center items-center bg-beige px-6">
       <Text className="text-2xl font-medium text-white mb-4 text-center">
-        Hellou, {session?.user?.email ?? "usuária"} 👋
+        Hello, {session?.user?.email ?? "usuária"} 👋
       </Text>
 
       <TouchableOpacity
