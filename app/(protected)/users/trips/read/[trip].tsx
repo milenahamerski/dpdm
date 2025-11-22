@@ -1,4 +1,3 @@
-// app/(protected)/users/trips/[trip].tsx
 import React, { useEffect, useState } from "react";
 import {
   View,
@@ -8,8 +7,8 @@ import {
   Pressable,
 } from "react-native";
 import { useLocalSearchParams, useRouter } from "expo-router";
-import { useSupabase } from "../../../../src/hooks/useSupabase";
-import TripMap from "../../../../src/components/ui/TripMap";
+import { useSupabase } from "@hooks/useSupabase";
+import TripMap from "@components/ui/TripMap";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function TripPage() {
@@ -71,7 +70,7 @@ export default function TripPage() {
   if (!tripData) {
     return (
       <View className="flex-1 justify-center items-center bg-white">
-        <Text className="text-md text-gray-700">Trip not found 😢</Text>
+        <Text className="text-md text-gray-700">Trip not found</Text>
       </View>
     );
   }

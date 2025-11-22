@@ -7,7 +7,6 @@ export default function ProtectedLayout() {
         headerShown: false,
       }}
     >
-      <Stack.Screen name="[id]" options={{ title: "User Details" }} />
       <Stack.Screen name="home" options={{ title: "Home" }} />
     </Stack>
   );
