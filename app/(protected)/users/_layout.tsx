@@ -5,9 +5,6 @@ export default function ProtectedLayout() {
     <Stack
       screenOptions={{
         headerShown: false,
-        contentStyle: {
-          backgroundColor: "#3F3D56",
-        },
       }}
     >
       <Stack.Screen name="[id]" options={{ title: "User Details" }} />
