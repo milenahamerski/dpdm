@@ -6,9 +6,9 @@ import {
   ActivityIndicator,
 } from "react-native";
 import { router } from "expo-router";
-import { useSupabase } from "../../../src/hooks/useSupabase";
+import { useSupabase } from "@hooks/useSupabase";
 import { useEffect, useState } from "react";
-import Card from "../../../src/components/ui/Card";
+import Card from "@components/ui/Card";
 
 type Country = {
   flag: string;
@@ -35,7 +35,7 @@ export default function HomeScreen() {
   };
 
   const handleNewTrip = () => {
-    router.push("/(protected)/users/new-trip");
+    router.push("/(protected)/users/trips/create");
   };
 
   const fetchTrips = async () => {
@@ -113,7 +113,7 @@ export default function HomeScreen() {
             <TouchableOpacity
               key={trip.id}
               activeOpacity={0.8}
-              onPress={() => router.push(`/users/trips/${trip.id}`)}
+              onPress={() => router.push(`/users/trips/read/${trip.id}`)}
             >
               <Card
                 destination={trip.destination}

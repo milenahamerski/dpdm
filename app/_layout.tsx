@@ -1,5 +1,5 @@
 import { Stack } from "expo-router";
-import { SupabaseProvider } from "../src/providers/supabase-provider";
+import { SupabaseProvider } from "@providers/supabase-provider";
 import "../global.css";
 
 export default function RootLayout() {
