@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -7,9 +8,8 @@ import {
   TextInput,
   Image,
 } from "react-native";
-import { router } from "expo-router";
+import { router, useFocusEffect } from "expo-router";
 import { useSupabase } from "@hooks/useSupabase";
-import { useEffect, useState } from "react";
 import Card from "@components/ui/Card";
 
 type Country = {
@@ -97,12 +97,14 @@ export default function HomeScreen() {
     setLoading(false);
   };
 
-  useEffect(() => {
-    if (session?.user) {
-      fetchTrips();
-      fetchAvatar(); // 👈 ADICIONADO
-    }
-  }, [session]);
+  useFocusEffect(
+    React.useCallback(() => {
+      if (session?.user) {
+        fetchTrips();
+        fetchAvatar();
+      }
+    }, [session])
+  );
 
   useEffect(() => {
     const filtered = trips.filter((trip) =>

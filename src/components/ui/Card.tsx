@@ -7,6 +7,7 @@ type TripCardProps = {
   startDate: string;
   endDate?: string | null;
   notes?: string | null;
+  maxWords?: number;
 };
 
 export default function Card({
@@ -15,7 +16,14 @@ export default function Card({
   startDate,
   endDate,
   notes,
+  maxWords = 20,
 }: TripCardProps) {
+  const truncateNotes = (text: string, limit: number) => {
+    const words = text.split(" ");
+    if (words.length <= limit) return text;
+    return words.slice(0, limit).join(" ") + "...";
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.textContainer}>
@@ -23,7 +31,9 @@ export default function Card({
         <Text style={styles.date}>
           {startDate} — {endDate ?? "open-ended"}
         </Text>
-        {notes ? <Text style={styles.notes}>{notes}</Text> : null}
+        {notes ? (
+          <Text style={styles.notes}>{truncateNotes(notes, maxWords)}</Text>
+        ) : null}
       </View>
 
       {countryFlag ? <Text style={styles.flag}>{countryFlag}</Text> : null}
@@ -40,7 +50,7 @@ const styles = StyleSheet.create({
     borderColor: "#eee",
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "flex-end",
+    alignItems: "flex-start",
     flexWrap: "wrap",
   },
   textContainer: {
@@ -55,6 +65,7 @@ const styles = StyleSheet.create({
   date: {
     fontSize: 14,
     color: "#555",
+    marginTop: 2,
   },
   notes: {
     fontSize: 14,
@@ -63,6 +74,6 @@ const styles = StyleSheet.create({
   },
   flag: {
     fontSize: 24,
-    alignSelf: "flex-end",
+    alignSelf: "flex-start",
   },
 });

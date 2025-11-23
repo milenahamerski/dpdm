@@ -11,7 +11,8 @@
       "@providers/*": ["providers/*"],
       "@components/*": ["components/*"],
       "@lib/*": ["lib/*"],
-      "@assets/*": ["assets/*"]
+      "@assets/*": ["assets/*"],
+      "@utils/*": ["utils/*"]
     },
     "esModuleInterop": true,
     "skipLibCheck": true,
