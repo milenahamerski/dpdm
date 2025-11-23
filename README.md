@@ -5,8 +5,9 @@
 **Mundi** é um aplicativo mobile desenvolvido com **React Native** e **Expo**, voltado para o **registro e planejamento de viagens**.
 
 **Vídeo do protótipo:**
+
 Segue o link do vídeo demonstrando o funcionamento do protótipo do aplicativo: [link](https://youtube.com/shorts/smFcdU0jQpg)
-Segue o link da defesa do projeto: 
+Segue o link da defesa do projeto: [link](https://youtube.com/)
 ## Imagens
 <img width="1080" height="1080" alt="Milena Hamerski - Mundi" src="https://github.com/user-attachments/assets/6a49cfb2-baf6-4422-aa2a-ef63feac329e" />
 <div style="display: flex; justify-content: space-between; flex-wrap: wrap;">
