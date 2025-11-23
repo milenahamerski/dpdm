@@ -4,6 +4,8 @@ import {
   ScrollView,
   TouchableOpacity,
   ActivityIndicator,
+  TextInput,
+  Image,
 } from "react-native";
 import { router } from "expo-router";
 import { useSupabase } from "@hooks/useSupabase";
@@ -27,7 +29,11 @@ type Trip = {
 export default function HomeScreen() {
   const { supabase, session, signOut } = useSupabase();
   const [trips, setTrips] = useState<Trip[]>([]);
+  const [filteredTrips, setFilteredTrips] = useState<Trip[]>([]);
   const [loading, setLoading] = useState(true);
+  const [search, setSearch] = useState("");
+
+  const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
 
   const handleLogout = async () => {
     await signOut();
@@ -36,6 +42,23 @@ export default function HomeScreen() {
 
   const handleNewTrip = () => {
     router.push("/(protected)/users/trips/create");
+  };
+
+  const handleProfile = () => {
+    router.push("/(protected)/users/profile");
+  };
+
+  const fetchAvatar = async () => {
+    const user = session?.user;
+    if (!user) return;
+
+    const { data } = await supabase
+      .from("profiles")
+      .select("avatar_url")
+      .eq("id", user.id)
+      .single();
+
+    setAvatarUrl(data?.avatar_url ?? null);
   };
 
   const fetchTrips = async () => {
@@ -69,25 +92,46 @@ export default function HomeScreen() {
       }));
 
       setTrips(normalized);
+      setFilteredTrips(normalized);
     }
     setLoading(false);
   };
 
   useEffect(() => {
-    if (session?.user) fetchTrips();
+    if (session?.user) {
+      fetchTrips();
+      fetchAvatar(); // 👈 ADICIONADO
+    }
   }, [session]);
+
+  useEffect(() => {
+    const filtered = trips.filter((trip) =>
+      trip.destination.toLowerCase().includes(search.toLowerCase())
+    );
+    setFilteredTrips(filtered);
+  }, [search, trips]);
 
   return (
     <View className="flex-1 bg-white px-md pt-10">
       <View className="flex-row justify-between items-center mb-lg">
-        <Text className="text-xl font-semibold text-navy">My Trips </Text>
-
-        <TouchableOpacity onPress={handleLogout}>
-          <Text className="text-red underline font-medium">Logout</Text>
+        <TextInput
+          className="flex-1 border border-gray-300 rounded-xl px-md py-sm text-md"
+          placeholder="Search by destination..."
+          value={search}
+          onChangeText={setSearch}
+        />
+        <TouchableOpacity onPress={handleProfile} className="ml-md">
+          <Image
+            source={{
+              uri:
+                avatarUrl ??
+                "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png",
+            }}
+            className="w-10 h-10 rounded-full bg-gray-200"
+          />
         </TouchableOpacity>
       </View>
 
-      {/* CREATE NEW TRIP */}
       <TouchableOpacity
         onPress={handleNewTrip}
         className="bg-blue py-md rounded-xl mb-lg items-center"
@@ -102,14 +146,14 @@ export default function HomeScreen() {
           <ActivityIndicator size="large" color="#3F3D56" />
           <Text className="text-navy mt-sm">Loading your trips...</Text>
         </View>
-      ) : trips.length === 0 ? (
-        <Text className="text-navy text-center mt-lg">No trips added yet</Text>
+      ) : filteredTrips.length === 0 ? (
+        <Text className="text-navy text-center mt-lg">No trips found</Text>
       ) : (
         <ScrollView
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{ gap: 16, paddingBottom: 32 }}
         >
-          {trips.map((trip) => (
+          {filteredTrips.map((trip) => (
             <TouchableOpacity
               key={trip.id}
               activeOpacity={0.8}
