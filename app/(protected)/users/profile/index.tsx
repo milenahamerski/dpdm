@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -7,8 +7,11 @@ import {
   TouchableOpacity,
   Alert,
 } from "react-native";
+import { useFocusEffect } from "expo-router";
 import * as ImagePicker from "expo-image-picker";
 import { useSupabase } from "@hooks/useSupabase";
+import { avatarSchema } from "utils/validationsSchema";
+import { handleAvatarError } from "utils/errorHandler";
 
 export default function ProfilePage() {
   const { supabase, session } = useSupabase();
@@ -16,6 +19,7 @@ export default function ProfilePage() {
 
   const [loading, setLoading] = useState(true);
   const [uploading, setUploading] = useState(false);
+
   const [profile, setProfile] = useState<{
     username: string;
     full_name: string;
@@ -25,10 +29,8 @@ export default function ProfilePage() {
 
   const loadProfile = async () => {
     if (!user) return;
-
     try {
       setLoading(true);
-
       const { data, error } = await supabase
         .from("profiles")
         .select("username, full_name, avatar_url")
@@ -44,7 +46,7 @@ export default function ProfilePage() {
       setProfile({
         username: data.username || "",
         full_name: data.full_name || "",
-        avatar_url: data.avatar_url || null,
+        avatar_url: data.avatar_url ?? null,
         email: user.email || "",
       });
     } finally {
@@ -52,9 +54,11 @@ export default function ProfilePage() {
     }
   };
 
-  useEffect(() => {
-    if (user) loadProfile();
-  }, [user?.id]);
+  useFocusEffect(
+    React.useCallback(() => {
+      if (user) loadProfile();
+    }, [user?.id])
+  );
 
   const pickAvatar = async () => {
     const permission = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -70,7 +74,18 @@ export default function ProfilePage() {
 
     if (result.canceled || !result.assets[0].base64) return;
 
-    uploadAvatar(result.assets[0].base64);
+    try {
+      const image = result.assets[0];
+      avatarSchema.parse({
+        base64: image.base64,
+        type: image.mimeType ?? "image/jpeg",
+      });
+
+      uploadAvatar(image.base64 ?? "");
+    } catch (err) {
+      const msg = handleAvatarError(err);
+      Alert.alert("Invalid image", msg);
+    }
   };
 
   const uploadAvatar = async (base64: string) => {
@@ -79,14 +94,11 @@ export default function ProfilePage() {
     try {
       setUploading(true);
 
-      const fileName = `${user.id}.jpg`;
+      const fileName = `${user.id}-${Date.now()}.jpg`;
       const filePath = `avatars/${fileName}`;
 
       const binary = atob(base64);
-      const bytes = new Uint8Array(binary.length);
-      for (let i = 0; i < binary.length; i++) {
-        bytes[i] = binary.charCodeAt(i);
-      }
+      const bytes = Uint8Array.from(binary, (c) => c.charCodeAt(0));
 
       const { error: uploadError } = await supabase.storage
         .from("avatars")
@@ -98,7 +110,7 @@ export default function ProfilePage() {
       if (uploadError) throw uploadError;
 
       const { data } = supabase.storage.from("avatars").getPublicUrl(filePath);
-      const publicUrl = data.publicUrl;
+      const publicUrl = `${data.publicUrl}?t=${Date.now()}`; // lógica para forçar atualização de imagem
 
       const { error: updateError } = await supabase
         .from("profiles")
@@ -112,7 +124,7 @@ export default function ProfilePage() {
       Alert.alert("Success", "Profile picture updated!");
     } catch (err) {
       console.error(err);
-      Alert.alert("Error", "Could not upload image.");
+      Alert.alert("Error", handleAvatarError(err));
     } finally {
       setUploading(false);
     }
@@ -134,6 +146,7 @@ export default function ProfilePage() {
       <View className="items-center mb-xl">
         <TouchableOpacity onPress={pickAvatar} activeOpacity={0.8}>
           <Image
+            key={profile.avatar_url} // força atualização do componente ao mudar a URL
             source={{
               uri:
                 profile.avatar_url ??

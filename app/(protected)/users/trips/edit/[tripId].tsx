@@ -30,7 +30,6 @@ export default function EditTripPage() {
   const [showStartPicker, setShowStartPicker] = useState(false);
   const [showEndPicker, setShowEndPicker] = useState(false);
 
-  // Load data
   useEffect(() => {
     const loadTrip = async () => {
       const { data, error } = await supabase
@@ -113,7 +112,6 @@ export default function EditTripPage() {
           Edit Trip Details
         </Text>
 
-        {/* Start Date */}
         <Text className="text-md text-gray-800 font-semibold mb-sm">
           Start Date
         </Text>
@@ -139,7 +137,6 @@ export default function EditTripPage() {
           />
         )}
 
-        {/* End Date */}
         <Text className="text-md text-gray-800 font-semibold mb-sm">
           End Date
         </Text>
@@ -167,7 +164,6 @@ export default function EditTripPage() {
           />
         )}
 
-        {/* Notes */}
         <Text className="text-md text-gray-800 font-semibold mb-sm">Notes</Text>
         <TextInput
           className="border border-gray-300 p-md rounded-xl mb-2xl text-md"
@@ -176,7 +172,6 @@ export default function EditTripPage() {
           onChangeText={(t) => setForm({ ...form, notes: t })}
         />
 
-        {/* Save Button */}
         <Pressable
           onPress={handleSave}
           className="bg-blue py-md px-lg mt-4 rounded-lg items-center mb-md active:opacity-80"

@@ -12,6 +12,9 @@ import { useSupabase } from "@hooks/useSupabase";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { router } from "expo-router";
 import debounce from "lodash.debounce";
+import { z } from "zod";
+import { handleTripError } from "utils/errorHandler";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function NewTripScreen() {
   const { supabase, session } = useSupabase();
@@ -29,7 +32,28 @@ export default function NewTripScreen() {
   const [abortController, setAbortController] =
     useState<AbortController | null>(null);
 
-  // --- Autocomplete with debounce + cancellation ---
+  const tripSchema = z
+    .object({
+      destination: z.string().min(3, "Destination is required."),
+      startDate: z.date(),
+      endDate: z.date().nullable(),
+      notes: z
+        .string()
+        .max(500, "Notes must be under 500 characters.")
+        .optional(),
+      lat: z.string(),
+      lon: z.string(),
+    })
+    .superRefine((data, ctx) => {
+      if (data.endDate && data.endDate < data.startDate) {
+        ctx.addIssue({
+          code: "custom",
+          message: "End date cannot be before start date.",
+          path: ["endDate"],
+        });
+      }
+    });
+
   const fetchSuggestions = debounce(
     async (text: string, controller?: AbortController) => {
       if (!text) {
@@ -54,11 +78,10 @@ export default function NewTripScreen() {
           }
         );
 
-        if (!response.ok) throw new Error("Nominatim API error");
+        if (!response.ok) throw new Error("Could not fetch suggestions.");
 
         const data = await response.json();
         setSuggestions(data);
-        console.log(data);
       } catch (error: any) {
         if (error.name !== "AbortError") {
           console.error("Error fetching places:", error);
@@ -70,27 +93,32 @@ export default function NewTripScreen() {
     500
   );
 
-  // --- Save trip in Supabase ---
   const handleSaveTrip = async () => {
     if (!selectedLocation) {
-      Alert.alert("Warning", "Please select a valid destination.");
-      return;
+      return Alert.alert("Warning", "Please select a valid destination.");
     }
 
     if (!session?.user) {
-      Alert.alert("Error", "User not authenticated.");
-      return;
+      return Alert.alert("Error", "User not authenticated.");
     }
 
-    setLoading(true);
+    const { display_name, lat, lon, place_type, address } = selectedLocation;
 
     try {
-      const { display_name, lat, lon, place_type, address } = selectedLocation;
-      const countryCode = address?.country_code?.toLowerCase();
+      tripSchema.parse({
+        destination: display_name,
+        startDate,
+        endDate,
+        notes,
+        lat,
+        lon,
+      });
 
+      setLoading(true);
+
+      const countryCode = address?.country_code?.toLowerCase();
       let countryId: string | null = null;
 
-      // Find matching country in 'countries' table
       if (countryCode) {
         const { data: countryData, error: countryError } = await supabase
           .from("countries")
@@ -98,14 +126,11 @@ export default function NewTripScreen() {
           .eq("code", countryCode)
           .single();
 
-        if (countryError) {
-          console.warn("Country not found:", countryError.message);
-        } else {
+        if (!countryError) {
           countryId = countryData?.id || null;
         }
       }
 
-      // Insert new trip
       const { error } = await supabase.from("trips").insert([
         {
           user_id: session.user.id,
@@ -120,28 +145,22 @@ export default function NewTripScreen() {
         },
       ]);
 
-      if (error) {
-        console.error(error);
-        Alert.alert("Error", "Could not save the trip.");
-      } else {
-        Alert.alert("Success", "Trip saved successfully!");
-        router.replace("/(protected)/users/home");
-      }
-    } catch (err) {
-      console.error(err);
-      Alert.alert("Error", "Failed to save the trip.");
+      if (error) throw error;
+
+      Alert.alert("Success", "Trip saved successfully!");
+      router.replace("/(protected)/users/home");
+    } catch (err: any) {
+      const friendlyMsg = handleTripError(err);
+      Alert.alert("Error", friendlyMsg);
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <View className="flex-1 bg-white p-lg">
-      <Text className="text-xl font-bold text-navy mb-md">
-        Create new trip ✈️
-      </Text>
+    <SafeAreaView className="flex-1 bg-white p-lg">
+      <Text className="text-xl font-bold text-navy mb-md">Create new trip</Text>
 
-      {/* Destination input */}
       <Text className="font-semibold mb-sm text-navy">Destination</Text>
       <View className="relative mb-sm">
         <TextInput
@@ -149,24 +168,20 @@ export default function NewTripScreen() {
           value={query}
           onChangeText={(text) => {
             setQuery(text);
-
             if (abortController) abortController.abort();
             const newController = new AbortController();
             setAbortController(newController);
-
             fetchSuggestions(text, newController);
           }}
           className="border border-gray-300 rounded-lg p-md bg-white"
         />
 
-        {/* Loader inside input */}
         {searching && (
           <View className="absolute right-3 top-3">
             <ActivityIndicator size="small" color="#666" />
           </View>
         )}
 
-        {/* Floating autocomplete list */}
         {suggestions.length > 0 && (
           <View
             style={{
@@ -179,10 +194,6 @@ export default function NewTripScreen() {
               borderWidth: 1,
               borderColor: "#e5e7eb",
               zIndex: 999,
-              shadowColor: "#000",
-              shadowOffset: { width: 0, height: 2 },
-              shadowOpacity: 0.1,
-              shadowRadius: 4,
               elevation: 5,
               maxHeight: 200,
             }}
@@ -215,7 +226,6 @@ export default function NewTripScreen() {
         )}
       </View>
 
-      {/* Dates */}
       <Text className="font-semibold mt-md mb-sm text-navy">Start date</Text>
       <TouchableOpacity
         onPress={() => setShowStartPicker(true)}
@@ -223,6 +233,7 @@ export default function NewTripScreen() {
       >
         <Text>{startDate.toLocaleDateString("en-US")}</Text>
       </TouchableOpacity>
+
       {showStartPicker && (
         <DateTimePicker
           value={startDate}
@@ -242,6 +253,7 @@ export default function NewTripScreen() {
       >
         <Text>{endDate ? endDate.toLocaleDateString("en-US") : "Select"}</Text>
       </TouchableOpacity>
+
       {showEndPicker && (
         <DateTimePicker
           value={endDate || new Date()}
@@ -254,7 +266,6 @@ export default function NewTripScreen() {
         />
       )}
 
-      {/* Notes */}
       <Text className="font-semibold mt-md mb-sm text-navy">Notes</Text>
       <TextInput
         placeholder="Some notes about this trip..."
@@ -266,7 +277,6 @@ export default function NewTripScreen() {
         style={{ textAlignVertical: "top" }}
       />
 
-      {/* Buttons */}
       <View className="flex-row justify-between">
         <TouchableOpacity
           onPress={() => router.replace("/(protected)/users/home")}
@@ -289,6 +299,6 @@ export default function NewTripScreen() {
           )}
         </TouchableOpacity>
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
