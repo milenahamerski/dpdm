@@ -74,11 +74,11 @@ Mais informações sobre as tarefas e progresso estão disponíveis em [Project 
 
 **Objetivo:** Permitir ao usuário registrar e gerenciar viagens.
 
-- [ ] Registro de novas viagens (destino, data, observações)
-- [ ] Listagem de viagens
-- [ ] Detalhes de uma viagem
-- [ ] Edição de viagens salvas
-- [ ] Exclusão de viagens
+- [x] Registro de novas viagens (destino, data, observações)
+- [x] Listagem de viagens
+- [x] Detalhes de uma viagem
+- [x] Edição de viagens salvas
+- [x] Exclusão de viagens
 
 ### Sprint 3 – Histórico & UX ~ 1.5 semanas
 
