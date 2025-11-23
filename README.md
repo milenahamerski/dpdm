@@ -18,6 +18,7 @@ Segue o link da defesa do projeto:
   <img src="https://github.com/user-attachments/assets/cdf5d36c-2897-4104-ade0-aa6f89b83b4a" style="width:16%;" />
 </div>
 
+---
 Com ele, você pode:
 
 - Registrar destinos e datas das suas viagens
@@ -96,26 +97,30 @@ Mais informações sobre as tarefas e progresso estão disponíveis em [Project 
 **Objetivo:** Melhorar a experiência do usuário e histórico de viagens.
 
 - [ ] Tela de histórico de viagens anteriores
-- [ ] Ajustes de UI seguindo protótipo do Figma
-- [ ] Validações de formulários
-- [ ] Feedback visual (loading, mensagens, toasts)
+- [x] Ajustes de UI seguindo protótipo do Figma
+- [x] Validações de formulários
+- [x] Feedback visual (loading, mensagens, toasts)
 
 ### Sprint 4 – Testes, Documentação & Publicação ~ 2 semanas
 
 **Objetivo:** Preparar o app para entrega e publicação inicial.
 
 - [ ] Escrita de testes básicos (unitários e integração)
-- [ ] Documentação do projeto (README, Wiki)
-- [ ] Deploy
+- [x] Documentação do projeto (README, Wiki)
+- [x] Deploy
 
-## Atualizações desde o último checkpoint (Checkpoint 2):
-
-Desde o checkpoint inicial, dei prioridade para construir meu aplicativo já integrado com as informações do Supabase. Nele, realizei:
-
+## Atualizações desde o último checkpoint (Checkpoint 2 - 12/10/2025):
 - Toda a parte de autenticação, incluindo a criação de novos usuários no banco, bem como a validação para verificar se o usuário já existe no sistema.
 - Adição do Expo Router e configuração das rotas, já implementando o fluxo index → autenticação → home (área protegida).
 - Criação de componentes reutilizáveis, além da tela de viagens, que será utilizada dentro da área protegida, embora ainda **não** esteja vinculada ao fluxo principal.
 - Implementação do NativeWind para padronizar os componentes customizáveis, com refatoração em andamento, pois os componentes foram originalmente criados para a disciplina de **Mobile 1**.
+
+## Atualizações desde o último checkpoint (Checkpoint Final - 23/11/2025):
+- Integração completa com OpenStreetMap via Expo Leaflet para visualização de mapas e geolocalização de viagens.
+- Implementação do CRUD de viagens, permitindo criar, editar, visualizar e deletar registros de viagens com detalhes, datas e notas.
+- Validação de formulários utilizando Zod, garantindo dados consistentes e seguros ao inserir ou editar informações do usuário e das viagens.
+- Estruturação da tela de perfil, com upload de fotos de usuário usando Supabase Storage, além de atualização em tempo real da imagem de perfil.
+- Implementação de filtragem e busca de viagens em tempo real, proporcionando melhor experiência de navegação para o usuário.
 
 Sobre **“Boas práticas para a criação de componentes reutilizáveis”**, alguns conceitos importantes da aula incluem:
 
@@ -124,3 +129,62 @@ Sobre **“Boas práticas para a criação de componentes reutilizáveis”**, a
 - Estilização consistente: usar padrões de estilos ou bibliotecas (como Tailwind/NativeWind) para manter a consistência visual.
 - Reutilização: criar componentes que possam ser usados em diferentes telas ou fluxos sem duplicação de código.
 - Composição: combinar componentes menores para construir interfaces mais complexas, em vez de criar grandes componentes monolíticos.
+
+## Executando o projeto
+Siga os passos abaixo para rodar o app Mundi localmente.
+
+1. Clonar o repositório
+```bash
+git clone https://github.com/milenahamerski/dpdm
+cd dpdm
+```
+
+2. Instalar dependências
+
+Certifique-se de ter o Node.js e npm/yarn instalados. Depois execute:
+```bash
+npm install
+# ou
+yarn install
+```
+
+3. Configurar variáveis de ambiente
+
+Crie um arquivo .env na raiz do projeto com as credenciais do Supabase:
+```env
+SUPABASE_URL=seu_supabase_url
+SUPABASE_ANON_KEY=sua_supabase_anon_key
+```
+
+Substitua seu_supabase_url e sua_supabase_anon_key pelos valores do seu projeto no Supabase.
+
+4. Iniciar o servidor de desenvolvimento
+```
+npm start
+# ou
+yarn start
+```
+
+Isso abrirá o Expo DevTools no navegador.
+
+5. Rodar o app
+
+Você tem duas opções:
+
+No celular (recomendado):
+Baixe o app Expo Go e escaneie o QR code exibido no DevTools.
+
+Em emulador Android:
+Certifique-se de ter o Android Studio instalado e o emulador rodando. Pressione a no terminal.
+
+6. Uso do app
+
+Cadastre-se ou faça login para acessar seu perfil.
+
+Faça upload da foto de perfil.
+
+Crie, edite e visualize suas viagens.
+
+Use a barra de busca para filtrar viagens em tempo real.
+
+Veja a localização das viagens no mapa (via Expo Leaflet + OpenStreetMap).
