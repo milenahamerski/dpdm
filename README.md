@@ -64,7 +64,6 @@ Os protótipos foram desenvolvidos no Figma e estão disponíveis para visualiza
 
 O app Mundi utilizará o banco de dados do Supabase (solução baseada em SQL) para armazenar as informações dos usuários e suas viagens.
 Para este trabalho, utilizei a documentação do [Supabase](https://supabase.com/docs/guides/getting-started/tutorials/with-expo-react-native), assim como o repositório [Expo Supabase Starter](https://github.com/flemingvincent/expo-supabase-starter)
-Para este trabalho, utilizei a documentação do [Supabase](https://supabase.com/docs/guides/getting-started/tutorials/with-expo-react-native), assim como o repositório [Expo Supabase Starter](https://github.com/flemingvincent/expo-supabase-starter)
 
 ### Link para visualização da modelagem no diagrams.net
 
