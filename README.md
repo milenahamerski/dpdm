@@ -122,7 +122,7 @@ Mais informações sobre as tarefas e progresso estão disponíveis em [Project 
 - Estruturação da tela de perfil, com upload de fotos de usuário usando Supabase Storage, além de atualização em tempo real da imagem de perfil.
 - Implementação de filtragem e busca de viagens em tempo real, proporcionando melhor experiência de navegação para o usuário.
 
-Sobre **“Boas práticas para a criação de componentes reutilizáveis”**, alguns conceitos importantes da aula incluem:
+## Sobre **“Boas práticas para a criação de componentes reutilizáveis”**, alguns conceitos importantes da aula incluem:
 
 - Separação de responsabilidades: cada componente deve ter uma função clara e única.
 - Propagação de propriedades (props): permitir que componentes recebam dados e comportamentos externos de forma flexível.
