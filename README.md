@@ -9,12 +9,14 @@ Segue o link do vídeo demonstrando o funcionamento do protótipo do aplicativo:
 Segue o link da defesa do projeto: 
 ## Imagens
 <img width="1080" height="1080" alt="Milena Hamerski - Mundi" src="https://github.com/user-attachments/assets/6a49cfb2-baf6-4422-aa2a-ef63feac329e" />
-<img width="362" height="643" alt="1" src="https://github.com/user-attachments/assets/9e7ea629-0136-4aca-aa09-1475f322d47e" />
-<img width="361" height="643" alt="2" src="https://github.com/user-attachments/assets/ef6c1674-2e96-4626-8e9f-f503556c9fdb" />
-<img width="360" height="642" alt="3" src="https://github.com/user-attachments/assets/67a4ff4a-e703-454e-a81a-8b6cd297d7a7" />
-<img width="360" height="643" alt="4" src="https://github.com/user-attachments/assets/9d643f03-b2db-42f5-a53f-2768347a0cf8" />
-<img width="359" height="641" alt="5" src="https://github.com/user-attachments/assets/f480bbe8-f263-418f-8ef7-dc0c812c123a" />
-<img width="359" height="640" alt="6" src="https://github.com/user-attachments/assets/cdf5d36c-2897-4104-ade0-aa6f89b83b4a" />
+<p float="left">
+  <img width="362" height="643" alt="1" src="https://github.com/user-attachments/assets/9e7ea629-0136-4aca-aa09-1475f322d47e" />
+  <img width="361" height="643" alt="2" src="https://github.com/user-attachments/assets/ef6c1674-2e96-4626-8e9f-f503556c9fdb" />
+  <img width="360" height="642" alt="3" src="https://github.com/user-attachments/assets/67a4ff4a-e703-454e-a81a-8b6cd297d7a7" />
+  <img width="360" height="643" alt="4" src="https://github.com/user-attachments/assets/9d643f03-b2db-42f5-a53f-2768347a0cf8" />
+  <img width="359" height="641" alt="5" src="https://github.com/user-attachments/assets/f480bbe8-f263-418f-8ef7-dc0c812c123a" />
+  <img width="359" height="640" alt="6" src="https://github.com/user-attachments/assets/cdf5d36c-2897-4104-ade0-aa6f89b83b4a" />
+</p>
 
 
 Com ele, você pode:
